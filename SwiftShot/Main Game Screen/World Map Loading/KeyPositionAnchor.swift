@@ -32,6 +32,16 @@ class KeyPositionAnchor: ARAnchor {
         super.init(coder: aDecoder)
     }
     
+    required init(anchor: ARAnchor) {
+        if let keyPositionAnchor = anchor as? KeyPositionAnchor {
+            self.image = keyPositionAnchor.image
+            self.mappingStatus = keyPositionAnchor.mappingStatus
+            super.init(transform: keyPositionAnchor.transform)
+        } else {
+            fatalError("Could not instantiate key position anchor")
+        }
+    }
+    
     override func encode(with aCoder: NSCoder) {
         super.encode(with: aCoder)
         aCoder.encode(image, forKey: "image")

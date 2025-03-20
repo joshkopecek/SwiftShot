@@ -91,12 +91,10 @@ class GameSession: NSObject {
             let peerIds = peers.map { $0.peerID }
             try session.send(data, toPeers: peerIds, with: .reliable)
             if action.description != "physics" {
-                 os_signpost(type: .event, log: .network_data_sent, name: .network_action_sent, signpostID: .network_data_sent,
-                             "Action : %s", action.description)
+                //  os_signpost(type: .event, log: .network_data_sent, name: .network_action_sent, signpostID: .network_data_sent,"Action : %s", action.description)
             } else {
                 let bytes = Int32(exactly: data.count) ?? Int32.max
-                os_signpost(type: .event, log: .network_data_sent, name: .network_physics_sent, signpostID: .network_data_sent,
-                            "%d Bytes Sent", bytes)
+                // os_signpost(type: .event, log: .network_data_sent, name: .network_physics_sent, signpostID: .network_data_sent, "%d Bytes Sent", bytes)
             }
         } catch {
             log.error("sending failed: \(error)")
@@ -114,12 +112,10 @@ class GameSession: NSObject {
                 try sendSmall(data: data, to: player.peerID)
             }
             if action.description != "physics" {
-                os_signpost(type: .event, log: .network_data_sent, name: .network_action_sent, signpostID: .network_data_sent,
-                            "Action : %s", action.description)
+                // os_signpost(type: .event, log: .network_data_sent, name: .network_action_sent, signpostID: .network_data_sent, "Action : %s", action.description)
             } else {
                 let bytes = Int32(exactly: data.count) ?? Int32.max
-                os_signpost(type: .event, log: .network_data_sent, name: .network_physics_sent, signpostID: .network_data_sent,
-                            "%d Bytes Sent", bytes)
+                // os_signpost(type: .event, log: .network_data_sent, name: .network_physics_sent, signpostID: .network_data_sent, "%d Bytes Sent", bytes)
             }
         } catch {
             log.error("sending failed: \(error)")
@@ -158,13 +154,11 @@ class GameSession: NSObject {
             let command = GameCommand(player: player, action: action)
             delegate?.gameSession(self, received: command)
             if action.description != "physics" {
-                os_signpost(type: .event, log: .network_data_received, name: .network_action_received, signpostID: .network_data_received,
-                            "Action : %s", action.description)
+                // os_signpost(type: .event, log: .network_data_received, name: .network_action_received, signpostID: .network_data_received, "Action : %s", action.description)
             } else {
                 let peerID = Int32(truncatingIfNeeded: peerID.displayName.hashValue)
                 let bytes = Int32(exactly: data.count) ?? Int32.max
-                os_signpost(type: .event, log: .network_data_received, name: .network_physics_received, signpostID: .network_data_received,
-                            "%d Bytes Sent from %d", bytes, peerID)
+                //  os_signpost(type: .event, log: .network_data_received, name: .network_physics_received, signpostID: .network_data_received, "%d Bytes Sent from %d", bytes, peerID)
             }
         } catch {
             log.error("deserialization error: \(error)")
